@@ -1,10 +1,12 @@
-from rest_framework import routers
 from django.urls import path, include
-from .views import UserViewSet
+from rest_framework.routers import DefaultRouter
+from .views import TopicViewSet, ItemViewSet, VoteViewSet
 
-router = routers.DefaultRouter()
-router.register('user', UserViewSet)
+router = DefaultRouter()
+router.register('topics', TopicViewSet)
+router.register('items', ItemViewSet)
+router.register('votes', VoteViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
 ]

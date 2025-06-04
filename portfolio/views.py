@@ -1,11 +1,18 @@
-from django.shortcuts import render
-
-# Create your views here.
-from .models import User
 from rest_framework import viewsets
-from .serializers import UserSerializer
+from .models import Topic, Item, Vote
+from .serializers import TopicSerializer, ItemSerializer, VoteSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
 
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+class VoteViewSet(viewsets.ModelViewSet):
+    queryset = Vote.objects.all()
+    serializer_class = VoteSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # 현재 로그인한 사용자로 저장
